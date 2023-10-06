@@ -1,4 +1,7 @@
 /*
+PsUsbConverter enables the use of gamepads for the PlayStation series via USB connection.
+
+Copyright (C) 2019-2020 by SukkoPera <software@sukkology.net>
 Copyright (C) 2023 by Lay31415 <lay31415@bm5keys-forever.com>
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
