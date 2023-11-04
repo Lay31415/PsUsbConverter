@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License along with thi
 #define JOY_DEADZONE 8192   // Disabled at 0
 #define ALWAYS_LED false
 #define CHECK_LED true
+#define DUPE_ASSIGN true
 #define LED_R A1
 #define LED_G A3
 #define LED_B A2
@@ -247,6 +248,10 @@ void loop() {
       ////////////////////
 
       // Set Joystick
+      Gamepad.xAxis(0);
+      Gamepad.yAxis(0);
+      Gamepad.rxAxis(0);
+      Gamepad.ryAxis(0);
       byte x, y;
       if (psx.getLeftAnalog(x, y)) {
         int X = psx_analog_to_joy(x);
@@ -276,16 +281,20 @@ void loop() {
             Gamepad.dPad1(setDpad(state_U, state_D, state_L, state_R));
             break;
           case LS:
-            Gamepad.xAxis(0);
-            Gamepad.yAxis(0);
+            if (!DUPE_ASSIGN) {
+              Gamepad.xAxis(0);
+              Gamepad.yAxis(0);
+            }
             if(state_U) Gamepad.yAxis(JOY_ANALOG_MIN);
             if(state_D) Gamepad.yAxis(JOY_ANALOG_MAX);
             if(state_L) Gamepad.xAxis(JOY_ANALOG_MIN);
             if(state_R) Gamepad.xAxis(JOY_ANALOG_MAX);
             break;
           case RS:
-            Gamepad.rxAxis(0);
-            Gamepad.ryAxis(0);
+            if (!DUPE_ASSIGN) {
+              Gamepad.rxAxis(0);
+              Gamepad.ryAxis(0);
+            }
             if(state_U) Gamepad.ryAxis(JOY_ANALOG_MIN);
             if(state_D) Gamepad.ryAxis(JOY_ANALOG_MAX);
             if(state_L) Gamepad.rxAxis(JOY_ANALOG_MIN);
