@@ -229,7 +229,7 @@ void loop() {
         }
         if (dpad >= DPAD_LEN) dpad = 0;
 
-        if (state_L || state_D || state_R){
+        if ((state_L || state_D || state_R) && !(state_L && state_D && state_R)){
           // Reset state
           Gamepad.releaseAll();
           Gamepad.write();
@@ -395,6 +395,10 @@ void loop() {
         // Select + 7 = RIGHT
         if (state_Sl && state_L) NKROKeyboard.add(KEY_RIGHT); else NKROKeyboard.remove(KEY_RIGHT);
       }
+
+      // Keyboard Send
+      NKROKeyboard.send();
+      delayMicroseconds(3500);
       break;
     default:
       // Irregular
@@ -402,9 +406,8 @@ void loop() {
       Gamepad.releaseAll();
       NKROKeyboard.releaseAll();
   }
-
+  
   // Send
   ////////////////////
   Gamepad.write();
-  NKROKeyboard.send();
 }
