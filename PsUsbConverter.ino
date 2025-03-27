@@ -69,6 +69,8 @@ byte setDpad(bool upKey, bool downKey, bool leftKey, bool rightKey) {
   byte udlr = upKey << 3 | downKey << 2 | leftKey << 1 | rightKey;
   switch (udlr) {
     case 0b1000:
+    case 0b1111: // pop'n support
+    case 0b1011: // GF support
       return (GAMEPAD_DPAD_UP);
     case 0b0100:
       return (GAMEPAD_DPAD_DOWN);
@@ -84,8 +86,6 @@ byte setDpad(bool upKey, bool downKey, bool leftKey, bool rightKey) {
       return (GAMEPAD_DPAD_DOWN_LEFT);
     case 0b0101:
       return (GAMEPAD_DPAD_DOWN_RIGHT);
-    case 0b1111:
-      return (GAMEPAD_DPAD_UP); // pop'n support
     default:
       return (GAMEPAD_DPAD_CENTERED);
   }
@@ -301,11 +301,18 @@ void loop() {
             if(state_R) Gamepad.rxAxis(JOY_ANALOG_MAX);
             break;
         }
-      } else if (mode == BUTTON) {
-        setButton(13, state_U);
-        setButton(14, state_D);
-        setButton(15, state_L);
-        setButton(16, state_R);
+      }
+      if (mode == BUTTON) {
+        setButton(11, state_U);
+        setButton(12, state_D);
+        setButton(13, state_L);
+        setButton(14, state_R);
+
+        setButton(15, state_L3);
+        setButton(16, state_R3);
+      } else {
+        setButton(11, state_L3);
+        setButton(12, state_R3);
       }
 
       // Set button state
@@ -319,8 +326,6 @@ void loop() {
       setButton(8, state_R2);
       setButton(9, state_Sl);
       setButton(10, state_St);
-      setButton(11, state_L3);
-      setButton(12, state_R3);
       break;
     case KONAMI:
       // KONAMI STATION Mode
